@@ -75,7 +75,7 @@ class JWTListener implements ListenerInterface {
                 $token = new JWTToken(
                     $user,
                     $requestToken,
-                    $decoded,
+                    (array) $decoded,
                     $this->providerKey
                 );
 
