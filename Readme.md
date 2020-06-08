@@ -44,6 +44,11 @@ $app['security.jwt'] = [
         'username_claim' => 'sub', // default name, option specifying claim containing username
         'header_name' => 'X-Access-Token', // default null, option for usage normal oauth2 header
         'token_prefix' => 'Bearer',
+        'not_before' => $app->protect(function() { return time() + 600; }), //optional, integer or function, add 'nbf' claim
+        'subject' => 'my subject', //optional, string or function, add 'sub' claim
+        'audience' => 'my audience', //optional, string or function, add 'aud' claim
+        'issuer' => 'My Company name', //optional, string, add 'iss' claim
+        'add_issued_at' => true, //optional, boolean, add 'iat' claim
     ]
 ];
 ```

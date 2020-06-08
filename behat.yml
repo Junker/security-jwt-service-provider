@@ -12,5 +12,5 @@ default:
             ttl: 86400
     suites:
         jwt_suite:
-            paths:    [ %paths.base%/tests/features ]
+            paths:    [ '%paths.base%/tests/features' ]
             contexts: ['Behat\JwtApiExtension\Context\JwtApiContext']
