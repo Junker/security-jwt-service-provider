@@ -49,6 +49,8 @@ class JWTEncoder implements TokenEncoderInterface
      */
     public function encode($data)
     {
+        $options = $this->options;
+
         $data['exp'] = time() + $this->lifeTime;
 
         if ($options['add_issued_at'] ?? false)
