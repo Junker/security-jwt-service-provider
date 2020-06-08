@@ -5,11 +5,11 @@ namespace Silex\Component\Security\Http\Firewall;
 use HttpEncodingException;
 use Silex\Component\Security\Core\Encoder\TokenEncoderInterface;
 use Silex\Component\Security\Http\Token\JWTToken;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 
 class JWTListener implements ListenerInterface {
@@ -65,11 +65,20 @@ class JWTListener implements ListenerInterface {
         );
 
         if (!empty($requestToken)) {
+
+            $username_claim = $this->options['username_claim'];
+
             try {
                 $decoded = $this->encode->decode($requestToken);
                 $user = null;
-                if (isset($decoded->{$this->options['username_claim']})) {
-                    $user = $decoded->{$this->options['username_claim']};
+                if (isset($decoded->{$username_claim})) {
+                    $user = $decoded->{$username_claim};
+                }
+                else
+                    throw new BadCredentialsException(sprintf("JWT token doesn't have '%s' claim", $username_claim));
+
+                if (!$user) {
+                    throw new BadCredentialsException('Invalid username.');
                 }
 
                 $token = new JWTToken(
