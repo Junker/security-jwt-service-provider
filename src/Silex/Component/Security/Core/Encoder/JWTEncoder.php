@@ -32,7 +32,7 @@ class JWTEncoder implements TokenEncoderInterface
      */
     private $allowed_algs;
 
-    public function __construct(string $secretKey, int $lifeTime, array $algorithm, array $options)
+    public function __construct(string $secretKey, int $lifeTime, string $algorithm, array $options)
     {
         $this->secretKey = $secretKey;
         $this->lifeTime = $lifeTime;
