@@ -41,10 +41,16 @@ add config for security jwt
 $app['security.jwt'] = [
     'secret_key' => 'Very_secret_key',
     'life_time'  => 86400,
+    'algorithm'  => 'HS512', //optional, default 'HS256'
     'options'    => [
         'username_claim' => 'name', // default name, option specifying claim containing username
         'header_name' => 'X-Access-Token', // default null, option for usage normal oauth2 header
         'token_prefix' => 'Bearer',
+        'not_before' => $app->protect(function() { return time() + 600; }), //optional, integer or function, add 'nbf' claim
+        'subject' => 'my subject', //optional, string or function, add 'sub' claim
+        'audience' => 'my audience', //optional, string or function, add 'aud' claim
+        'issuer' => 'My Company name', //optional, string, add 'iss' claim
+        'add_issued_at' => true, //optional, boolean, add 'iat' claim
     ]
 ];
 ```

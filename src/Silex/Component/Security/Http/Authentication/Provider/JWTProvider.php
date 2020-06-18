@@ -58,6 +58,7 @@ class JWTProvider implements AuthenticationProviderInterface
         $this->userChecker->checkPostAuth($user);
         $token = new JWTToken($user,
             $token->getCredentials(),
+            $token->getPayload(),
             $this->providerKey,
             $this->getRoles($user, $token)
         );
