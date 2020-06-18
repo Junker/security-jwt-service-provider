@@ -4,7 +4,6 @@ namespace Silex\Component\Security\Core\Encoder;
 
 use \Firebase\JWT\JWT;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use \Firebase\JWT\JWT;
 
 class JWTEncoder implements TokenEncoderInterface
 {
